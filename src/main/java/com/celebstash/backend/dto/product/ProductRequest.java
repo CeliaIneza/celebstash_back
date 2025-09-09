@@ -1,5 +1,6 @@
 package com.celebstash.backend.dto.product;
 
+import com.celebstash.backend.model.enums.ProductType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,4 +34,9 @@ public class ProductRequest {
     @NotNull(message = "Stock quantity is required")
     @Min(value = 0, message = "Stock quantity must be greater than or equal to 0")
     private Integer stockQuantity;
+
+    private ProductType productType = ProductType.REGULAR;
+
+    @Min(value = 0, message = "Initial bid price must be greater than or equal to 0")
+    private BigDecimal initialBidPrice;
 }

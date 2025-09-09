@@ -1,6 +1,7 @@
 package com.celebstash.backend.model;
 
 import com.celebstash.backend.model.enums.ProductStatus;
+import com.celebstash.backend.model.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,26 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ProductType productType = ProductType.REGULAR;
+
+    @Column
+    private BigDecimal initialBidPrice;
+
+    @Column
+    private BigDecimal currentBidPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "current_bidder_id")
+    private User currentBidder;
+
+    @Column
+    private LocalDateTime bidStartTime;
+
+    @Column
+    private LocalDateTime bidEndTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", nullable = false)

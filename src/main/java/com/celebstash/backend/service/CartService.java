@@ -29,6 +29,7 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
     private final UserService userService;
+    private final WalletService walletService;
 
     /**
      * Get or create a cart for the current user
@@ -70,6 +71,14 @@ public class CartService {
         // Check if there's enough stock
         if (product.getStockQuantity() < quantity) {
             throw new AppException("Not enough stock available", HttpStatus.BAD_REQUEST);
+        }
+
+        // Calculate total price for this product
+        BigDecimal totalPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+
+        // Check if user has sufficient balance
+        if (!walletService.hasSufficientBalance(totalPrice)) {
+            throw new AppException("Insufficient wallet balance. Please top up your wallet.", HttpStatus.BAD_REQUEST);
         }
 
         Cart cart = getOrCreateCart();
@@ -129,6 +138,14 @@ public class CartService {
         // Check if there's enough stock
         if (product.getStockQuantity() < quantity) {
             throw new AppException("Not enough stock available", HttpStatus.BAD_REQUEST);
+        }
+
+        // Calculate total price for this product
+        BigDecimal totalPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+
+        // Check if user has sufficient balance
+        if (!walletService.hasSufficientBalance(totalPrice)) {
+            throw new AppException("Insufficient wallet balance. Please top up your wallet.", HttpStatus.BAD_REQUEST);
         }
 
         Cart cart = getOrCreateCart();

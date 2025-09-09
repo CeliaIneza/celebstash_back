@@ -1,6 +1,7 @@
 package com.celebstash.backend.dto.product;
 
 import com.celebstash.backend.model.enums.ProductStatus;
+import com.celebstash.backend.model.enums.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +23,19 @@ public class ProductResponse {
     private String imageUrl;
     private Integer stockQuantity;
     private ProductStatus status;
+    private ProductType productType;
     private Long sellerId;
     private String sellerName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime approvedAt;
+
+    // Bidding related fields
+    private BigDecimal initialBidPrice;
+    private BigDecimal currentBidPrice;
+    private Long currentBidderId;
+    private String currentBidderName;
+    private LocalDateTime bidStartTime;
+    private LocalDateTime bidEndTime;
+    private boolean isBiddingActive;
 }
